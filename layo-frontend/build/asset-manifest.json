@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e79456eb.css",
+    "main.js": "/static/js/main.b5324a04.js",
+    "static/media/ribbons_multicolor.png": "/static/media/ribbons_multicolor.cdfe5d3b7c5c92b0a34a.png",
+    "static/media/party-pic.png": "/static/media/party-pic.cf5420505d8493081a6e.png",
+    "static/media/cotton-multicolor.png": "/static/media/cotton-multicolor.a78339d10d2ab3cb23b8.png",
+    "static/media/tailor-in-yellow.png": "/static/media/tailor-in-yellow.931f3977403c0a96468d.png",
+    "static/media/Binwhite.png": "/static/media/Binwhite.c7e16e625eb8f1a61541.png",
+    "static/media/transparentlogo.png": "/static/media/transparentlogo.35e4993c214ddbf0db7e.png",
+    "static/media/womencat-testpic3.png": "/static/media/womencat-testpic3.8dac7f433aea4a78baad.png",
+    "static/media/womencat-testpic1.png": "/static/media/womencat-testpic1.a261eda9f233d533cfe6.png",
+    "static/media/womencat-testpic2.png": "/static/media/womencat-testpic2.0b6f1104bc6e2bca172e.png",
+    "static/media/womencat-testpic5.png": "/static/media/womencat-testpic5.16d91bd2cecffb21a9fb.png",
+    "static/media/womencat-testpic4.png": "/static/media/womencat-testpic4.7781f51d70151bcbe3e4.png",
+    "static/media/fabrics-testpic3.png": "/static/media/fabrics-testpic3.f5f718d91e5e0c76f932.png",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.e559bf06bc84fd9525e6.woff",
+    "static/media/fabrics-testpic4.png": "/static/media/fabrics-testpic4.a31ca2f10220422d66d6.png",
+    "static/media/fabrics-testpic9.png": "/static/media/fabrics-testpic9.f6cefec52c243bacd368.png",
+    "static/media/fabrics-testpic6.png": "/static/media/fabrics-testpic6.c58b02ab132c0905d6c4.png",
+    "static/media/fabrics-testpic8.png": "/static/media/fabrics-testpic8.f9fcb203f5461d9602d9.png",
+    "static/media/fabrics-testpic12.png": "/static/media/fabrics-testpic12.5bfd082a99cad04939e9.png",
+    "static/media/fabrics-testpic11.png": "/static/media/fabrics-testpic11.1616d38c05ba2baa8d79.png",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.ea98e12d2d58747f9fc5.woff2",
+    "static/media/fabrics-testpic2.png": "/static/media/fabrics-testpic2.0c14365d63be92bb5dc0.png",
+    "static/media/fabrics-testpic7.png": "/static/media/fabrics-testpic7.8fba3d77acbbcef77b64.png",
+    "static/media/fabrics-testpic10.png": "/static/media/fabrics-testpic10.2913893db50681eba3b7.png",
+    "static/media/fabrics-testpic1.png": "/static/media/fabrics-testpic1.ac9cd8e535a5db3c6f15.png",
+    "static/media/womencat-testpic6.png": "/static/media/womencat-testpic6.155b722b13cb14f5e0a2.png",
+    "static/media/fabrics-testpic5.png": "/static/media/fabrics-testpic5.5435873a7744cf83de5a.png",
+    "index.html": "/index.html",
+    "main.e79456eb.css.map": "/static/css/main.e79456eb.css.map",
+    "main.b5324a04.js.map": "/static/js/main.b5324a04.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e79456eb.css",
+    "static/js/main.b5324a04.js"
+  ]
+}

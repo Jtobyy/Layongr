@@ -1,0 +1,7 @@
+.env
+__pycache__
+migrations
+user_*
+Fashion_*
+Cyberstick*
+db.sqlite3

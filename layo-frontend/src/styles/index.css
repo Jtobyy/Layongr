@@ -1,0 +1,697 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+ button {
+  background-color: rgb(2, 58, 80);
+  color: white;
+  padding: 2px 0px;
+}
+.cursor {
+  cursor: pointer;
+}
+.smaller {
+  font-size: .875em;
+}
+
+img {
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}
+
+/* Landing page section */
+.landing .section-1,
+.landing .section-3 {
+  height: calc(100vh - 50px);
+  position: relative;
+}
+.landing .section-1 div {
+  background-color: rgb(217, 217, 217);
+  width: fit-content;
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 0;
+  bottom: 200px;
+  transition: all .2s;
+  cursor: pointer;
+}
+.landing .section-1 div:hover { 
+  background-color: rgb(240, 240, 240);
+  transition: all .2s;
+}
+.landing .section-2 .flex-container {
+  height: calc(100vh - 50px);
+  padding: 50px 0px;
+}
+.landing .section-2 .flex-item:first-child {
+  margin-left: 0px;
+}
+.landing .section-2 .flex-item {
+  margin-left: 20px;
+}
+.landing .section-2 img {
+  width: 100%;
+  height: 100%;
+}
+.landing .section-2 button {
+  background-color: rgb(2, 58, 80);
+  color: white;
+  padding: 2px 0px;
+  width: 100%;
+  margin-top: 25px;
+  font-size: 2rem;
+}
+.landing .section-2 button:hover {
+  background-color: rgb(4, 86, 118);
+  transition: all .2s;
+}  
+.landing .section-3 {
+  margin-top: 25px; /* Compensate for section-2 button */
+  padding-top: 50px;
+  color: white;
+  background-clip: content-box;
+}
+.ribbon-multi-bg {
+  /* background: grey url('../images/ribbons_multicolor.png') no-repeat border-box border-box fixed; */
+  background-color: rgb(176, 104, 53);
+  background-image: url('../images/ribbons_multicolor.png');
+  /* background-position: ; */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-clip: border-box;  
+}
+.party-pic-bg {
+  background-color: rgb(20, 181, 194);  
+  background-image: url('../images/party-pic.png');
+  background-size: cover; 
+  background-repeat: no-repeat;
+}
+/* End of Landing page section */
+
+
+/* Components section */
+/* Categories section */
+.carousel-control {
+  width: fit-content;
+  margin: 0px;
+}
+.categories-carousel {
+  /* position: fixed; */
+  /* width: 100%; */
+  z-index: 200;
+  background-color: white;
+}
+.categories-carousel .carousel-item .flex-container {
+  width: 80%;
+}
+
+.categories-carousel .carousel-item img {
+  width: 60px;
+}
+.categories-carousel .carousel-item  p,
+.categories-carousel .carousel-item  img {
+    /* fix cetering  */
+  position: relative;  
+  top: 10px;  
+}
+.fabrics .categories-carousel .carousel-item  .items-wrapper div {
+  font-size: small;
+  background-color: #F2F2F2;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 50px;
+}
+.fabrics .categories-carousel .carousel-item  .items-wrapper .selectedCatItem {
+  background-color: black;  
+  color: white;
+}
+
+/* End of Categories section */
+
+/* FilterBy component */
+.filter-by h5 {
+  font-weight: 400;
+  cursor: pointer;
+}
+.filter-by .stars-wrapper img {
+  width: 30px;
+  margin: 2px;
+}
+.filter-by ul {
+  padding: 0px;
+  padding-left: 10px;
+  width: fit-content;
+}
+.filter-by .rating,
+.filter-by .pricing,
+.filter-by .delivery {
+  width: 170px;
+}
+.filter-by .pricing li,
+.filter-by .delivery li{
+  border: 1px solid black;
+  list-style-type: none;
+  margin-top: 6px;
+  text-align: center;
+  padding: 0px 4px;
+}
+.arrow {
+  width: fit-content;
+  right: 0;
+  top: 10px;
+  cursor: pointer;
+  transition: all .3s;
+  left: 85%;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.stroke-1,
+.stroke-2 {    
+    width: 8px;
+    height: 2px;
+    position: relative;
+    background-color: black;
+}
+.stroke-1 {
+    transform: rotate(45deg);
+    left: -3px;
+}
+.stroke-2 {
+    transform: rotate(-45deg);
+    right: -2px;
+    top: -2px;
+}
+.fabrics .colors .row div {
+  border: solid 1px black;  
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  margin: 0px 6px 8px 0px;
+  border-radius: 3px;
+}
+/* End of FilterBy section */
+
+/* CustomerReview Component */
+
+.customer-review .stars-wrapper img {
+  width: 30px;
+  margin: 2px;
+}
+.customer-review .review-list {
+  border: 1px solid black;
+  height: 70vh;
+  overflow: auto;
+  /* scrollbar-color: black blue; */
+}
+.customer-review .review-list .review-item {
+  border: 1px solid black;
+  margin-top: 20px;
+}
+.customer-review .review-list .review-message {
+  border: 1px solid black;
+}
+.customer-review .review-item .stars-wrapper img {
+  width: 20px;
+  margin: 2px;
+}
+
+/* End of Components section */
+
+
+/* Header section */
+.header {
+  height: 50px;
+  z-index: 2100;
+  border: 1px solid black;
+}
+.header .signin-link {
+  width: fit-content !important; 
+  background-color: rgb(4, 86, 118);
+  padding: 2px 7px;
+  font-size: 1.15rem;  
+}
+.header-logo {
+  width: 50px;
+  transform: scale(1.4);
+  margin-left: -3px;
+}
+.header .query {
+  height:35px;
+  border-radius: 14px;
+  width: 250px;
+}
+.header .search-icon {
+  cursor: pointer;
+  height: 35px;
+  border-radius: 0px 14px 14px 0px;
+}
+.header .nav-item {
+  font-size: 1.2rem;
+}
+
+.signin-form {
+  width: 20vw;
+  margin-left: auto;
+  margin-right: 40px;
+  background-color: white;
+  z-index: 1500;
+}
+/* End of Header section */
+
+
+/* Footer section */
+.footer .nav-link {
+  padding-bottom: 3px;
+}
+.footer .navbar-brand {
+  font-size: 1.2rem;
+}
+.footer .social-icons img {
+  width: 40px;
+  margin-left: 5px;
+}
+/* End of Footer section */
+
+
+/* ...Cat sections */
+.women-cat .filter-wrapper,
+.men-cat .filter-wrapper,
+.kids-cat .filter-wrapper,
+.fabrics .filter-wrapper {
+  height: fit-content;
+  z-index: 2000;
+}
+.women-cat .sort-ind,
+.men-cat .sort-ind,
+.kids-cat .sort-ind {
+  z-index: 5;
+  left: 80%;
+  margin-top: -15px;
+  background-color: rgb(243, 243, 243);
+  width: fit-content;
+}
+.women-cat .product-container,
+.men-cat .product-containerm
+.kids-cat .product-container {
+  background-color: white;
+}
+.women-cat .product-container .product-image,
+.men-cat .product-container .product-image,
+.kids-cat .product-container .product-image { 
+  cursor: pointer;
+  background-color: rgb(188, 187, 187);
+  border-radius: 7px;
+  width: calc(100% + 10px);
+  height: 25vw;
+  margin-top: 10px;
+}
+.women-cat .product-container img.blackStar,
+.men-cat .product-container img.blackStar,
+.kids-cat .product-container img.blackStar {
+  background-color: inherit;
+  width: 15px;
+  position: relative;
+  bottom: 7px;
+}
+.women-cat .wishlist-add-btn,
+.men-cat .wishlist-add-btn,
+.kids-cat .wishlist-add-btn {
+  background-color: rgb(166, 238, 238);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+}
+.women-cat .wishlist-add-btn img,
+.men-cat .wishlist-add-btn img,
+.kids-cat .wishlist-add-btn img {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+  cursor: pointer;
+}
+
+/* End of WomenCat section */
+
+
+/* Fabrics section */
+.fabrics .fabric-container .fabric-image {
+  cursor: pointer;  
+  background-color: rgb(188, 187, 187);
+  border-radius: 7px;
+  height: 19vw;
+}
+.fabrics .wishlist-add-btn {
+  background-color: rgb(166, 238, 238);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+}
+.fabrics .wishlist-add-btn img{
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+  cursor: pointer;
+}
+
+/* ProductDetail section */
+.product-detail-page .checkout {
+  width: fit-content;
+  background-color: white;
+  border-bottom: 1px solid black;
+  z-index: 10;
+  display: none;
+}
+.product-detail-page .checkout .cancel-btn {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 0px;
+  top: 7px;
+}
+.product-detail-page .checkout .checkout-header {
+  border-bottom: 1px solid black;
+}
+.product-detail-page .checkout .fabrics {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.product-detail-page .checkout .options h3:hover {
+  transition: all .3s;
+  cursor: pointer;
+  transform: scale(.97);
+}
+.product-detail-page .checkout .options h3:active {
+  transition: all .3s;
+  transform: scale(1);
+}
+.product-detail-page .checkout .options h3:first-child {
+  border-left: 1px solid black;
+} 
+.product-detail-page .checkout .options h3:last-child {
+  border-right: 1px solid black;
+} 
+.product-detail-page .checkout img {
+  margin: 5px;
+}  
+.product-detail-page .sampleImageLarge {
+  background-color: rgb(172,158,149);
+  height: 70vh;
+  width: 49%;
+  padding: 0;
+}
+.product-detail-page .sampleImageSmall {
+  background-color: rgb(172,158,149);
+  height: 30vh;
+  width: 30%;
+  margin-top: 20px;
+  padding: 0;
+}
+.product-detail-page .detail-container {
+  height: fit-content;
+}
+.product-detail-page .product-detail {
+  border-top: 1px;
+  border-bottom: 1px;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: black; 
+  border-style: solid; 
+  min-height: 15vw;
+}
+.product-detail-page .product-detail button:hover {
+  background-color: rgb(4, 86, 118);
+  transition: all .2s;
+}  
+.product-detail-page .product-detail .col:first-child {
+  font-size: 1.7rem;
+  padding-top: 40px;
+}
+.product-detail-page .product-detail .col:last-child {
+  border-left: 1px solid black;
+  padding-top: 20px;
+}
+.product-detail-page .product-detail .info ul {
+  padding-left: 18px;
+}
+.product-detail-page .more {
+  border-top: 1px solid black;
+  margin-top: -100px;
+}
+.product-detail-page .more .sampleImageMedium {
+  width: 100%;
+  height: calc(93%);
+}
+
+
+
+
+/* FabricDetails section */
+.fabric-detail-page .sampleImageLarge {
+  background-color: rgb(172,158,149);
+  height: 70vh;
+  width: 49%;
+  padding: 0;
+}
+.fabric-detail-page .sampleImageSmall {
+  background-color: rgb(172,158,149);
+  height: 30vh;
+  width: 30%;
+  margin-top: 20px;
+  padding: 0;
+}
+.fabric-detail-page .detail-container {
+  height: fit-content;
+}
+.fabric-detail-page .fabric-detail {
+  border-top: 1px;
+  border-bottom: 1px;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: black; 
+  border-style: solid; 
+  min-height: 15vw;
+}
+.fabric-detail-page .fabric-detail .col:first-child {
+  font-size: 1.7rem;
+  padding-top: 40px;
+}
+.fabric-detail-page .fabric-detail .col:last-child {
+  border-left: 1px solid black;
+  padding-top: 20px;
+}
+.fabric-detail-page .fabric-detail .info ul {
+  padding-left: 18px;
+}
+.fabric-detail-page .more {
+  border-top: 1px solid black;
+  margin-top: -100px;
+}
+.fabric-detail-page .more .sampleImageMedium {
+  width: 100%;
+  height: calc(93%);
+}
+.fabric-detail-page .combo-icon-wrapper {
+  font-weight: 700;
+  font-size:2rem;
+}
+.fabric-detail-page .combo {
+  border-bottom: 1px solid black;
+}
+.fabric-detail-page .combo .price-wrapper .price {
+  width: fit-content;
+  margin-left: -60px;
+  background-color: blue;
+}
+.fabric-detail-page .more-of-type .fabric-image {
+  width: 17vw;
+}
+
+
+/* Checkout Measuremet */
+.checkout-measurement .options .content {
+  border: 2px solid #FFD700 !important;
+}
+.checkout-measurement .note {
+  width: 45vw !important;
+  font-size: small;
+}
+.checkout-measurement .note2 {
+  width: fit-content !important;
+}
+.checkout-measurement .note3 {
+  width: fit-content !important;
+}
+.checkout-measurement button:hover {
+  background-color: rgb(4, 86, 118);
+  transition: all .2s;
+}  
+
+
+/* Reivew Order */
+.review-order .row .col p {
+  font-size: small;
+}
+.review-order .row .order-button {
+  background-color: rgb(2, 58, 80);
+  color: white;
+  width: 100%;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-left: -30px;
+}
+.review-order .order-button:hover {
+  background-color: rgb(4, 86, 118);
+  transition: all .2s;
+}  
+.review-order .delivery-est {
+  color: #023A50;
+}
+.review-order .order-image {
+  width: 10vw;
+  height: 13vw;
+}
+.review-order .edit-btn {
+  width: 15px;
+  margin-right: 150px;
+  transition: all .3s;
+}
+.review-order .edit-btn:hover {
+  width: 20px;
+}
+.review-order .edit-btn:active {
+  width: 15px;
+}
+.review-order .address-overlay {
+  width: 60vw;
+  height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  left: 20%;
+  right: -20px;
+}
+.review-order .address-overlay h5 {
+  background-color: #D9D9D9;
+}
+.review-order .address-overlay .col-3{
+  width: 30%;
+  height: 30vh;
+  position: relative;
+}
+.review-order .address-overlay .col-3 .btn-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.review-order .address-overlay .col-3 p {
+  margin-top: -2px;
+}
+.review-order .address-overlay .col-3 .btn {
+  background-color: #D9D9D9;
+  color: white;
+}
+.review-order .address-overlay .col-3 .btn.selected {
+  background-color: #559A9E;
+  color: white;
+}
+.review-order .position-absolute {
+  z-index: 10;
+}
+.review-order .add-btn {
+  width: 35px;
+  height: 33px;
+  position: relative;
+  top: 7px;
+}
+
+.review-order .payment-overlay {
+  left: 35%;
+  margin-top:  180px;
+}
+.review-order .payment-overlay div div {
+  width: 30vw;
+  cursor: pointer;
+  transition: all 1s;
+}  
+.review-order .payment-overlay div div:hover {
+  transform: scale(1.02);
+}  
+
+/* Profile */
+.Profile {
+  min-height: 60vh;
+}
+.Profile .sidenav {
+  height: fit-content;
+  
+}
+.Profile .table-wrapper {
+  border: solid 1.5px gray;
+  border-radius: 8px !important;
+  margin-bottom: 10px;
+}
+.Profile .nav-item.selected {
+  border-bottom: solid 1px black;
+}
+.Profile .row .sidenav .nav-item {
+  cursor: pointer;
+}
+.Measurement div div {
+  width: 30vw;
+  cursor: pointer;
+  transition: all 1s;
+}  
+.StandardMeasurement .table-wrapper .table .edit-pencil, 
+.Account .edit-pencil {
+  left: 10px;
+  bottom: 2px;
+}
+.CustomEdit .content div {
+  font-size: 1.2rem;
+}
+
+.Orders .filter {
+  right: 205px;
+  top: 85px;
+}
+
+/* Bag */
+.bag {
+  font-size: .8rem;
+  width: 20vw;
+  right: 0px;
+  margin-top: 45px;
+}
+.bag .item:hover {
+  cursor: pointer;  
+  background-color: rgb(2, 58, 80, .1);  
+  /*  background-color: rgba(155, 255, 255, .1); */
+}
+.bag .smaller {
+  font-size: .7rem;
+  margin-top: -2px;
+  margin-bottom: 0px;
+}
+.bag .btn {
+  border-radius: 15px;  
+}  
