@@ -25,9 +25,12 @@ class ProductListAPIView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Product.objects.all()
         tag = self.request.query_params.get('tags')
+        category = self.request.query_params.get('cat')
         if tag is not None:
             tags = tag.split(',')    
-            queryset = queryset.filter(tags__in = tags).distinct()
+            queryset = queryset.filter(tags__in = tags)
+        if category is not None:
+            queryset = queryset.filter(category__in = category)
         return queryset
     serializer_class = ProductSerializer
 

@@ -29,6 +29,7 @@ class TagSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
+            'category',
             'image',
         ]
 
