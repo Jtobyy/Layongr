@@ -16,7 +16,7 @@ import redlove from '../images/redlove.png';
 
 
 export default function Fabrics() {
-    const fabrics = useSelector(state => state.fabrics.fabrics)    
+    const fabrics = useSelector(state => state.fabrics.fabrics)
     const fabricsWishlist = useSelector(state => state.fabricsWishlist)
     const fabricsStatus = useSelector(state => state.fabrics.status)
     const errorMessage = useSelector(state => state.fabrics.error)
@@ -34,8 +34,22 @@ export default function Fabrics() {
             // console.log(errorMessage)
             // if (errorMessage === 'Network Error') alert(errorMessage)
         }
-        else if (fabricsStatus === 'success') console.log('got fabrics')
+        else if (fabricsStatus === 'succeeded') console.log('got fabrics')
     }, [fabricsStatus, dispatch, fabrics, errorMessage])
+
+    // useEffect(() => {
+    //     if (tagStatus === 'idle') {
+    //         dispatch(fetchTags())
+    //     }
+    //     else if (tagStatus === 'failed') {
+    //         console.log('unable to fetch tags')
+    //         console.log(tagError)
+    //     }
+    //     else if (tagStatus === 'succeeded') {
+    //         console.log("got tags")
+    //         console.log(tags)
+    //     }
+    // }, [tagStatus, dispatch, tags, tagError])
 
     const renderedFabrics = fabrics.map(fabric => (
         <div className="col-3 fabric-container  position-relative" key={fabric.id}>

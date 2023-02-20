@@ -357,6 +357,7 @@ img {
   background-color: rgb(188, 187, 187);
   border-radius: 7px;
   height: 19vw;
+  width: 100%;
 }
 .fabrics .wishlist-add-btn {
   background-color: rgb(166, 238, 238);

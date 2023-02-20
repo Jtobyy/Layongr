@@ -17,16 +17,28 @@ import axios from "axios";
 // itemPrototype = {
 //     id, title, image, company, rating, price, delivery_time,
 // }
-export const fetchFabrics = createAsyncThunk('fabrics/fetchFabrics', async () => {
-    let response = await axios.get('http://127.0.0.1:8000/api/products/?tags=1')
-    return response
+export const fetchTags = createAsyncThunk('fabrics/fetchTags', async () => {
+  let response = await axios.get('http://127.0.0.1:8000/api/products/tags?cat=F')
+  return response
 })
+
+
+export const fetchFabrics = createAsyncThunk('fabrics/fetchFabrics', async () => {
+  let response = await axios.get('http://127.0.0.1:8000/api/products/?cats=F')
+  return response
+})
+
+let tags = ['fabric', 'lace', 'chiffon', 'adire', 'velvet', 'aso_oke', 'ankara', 'atiku', 'broccades', 'yarn', 'flannel', 'tulle']
 
 let initialState = {
     fabrics: [],
     currentSelect: 0,
+    tags: tags,
+    currentTag: 0,
     status: 'idle',
-    error: null
+    tagStatus: 'idle',
+    error: null,
+    tagError: null
 }
 
 const fabricsSlice = createSlice({
@@ -38,7 +50,10 @@ const fabricsSlice = createSlice({
         // }
         selectCurrent: (state, action) => {
             state.currentSelect = action.payload;
-        }
+        },
+        selectTag: (state, action) => {
+            state.currentTag = action.payload;
+      }
     },
     extraReducers(builder) {
         builder
@@ -56,8 +71,23 @@ const fabricsSlice = createSlice({
             console.log('failed')
             state.error = action.error.message
           })
+
+          .addCase(fetchTags.pending, (state, action) => {
+            state.tagStatus = 'loading'
+            console.log('loading tags')
+          })
+          .addCase(fetchTags.fulfilled, (state, action) => {
+            state.tagStatus = 'succeeded'
+            console.log('success getting tags')
+            state.fabrics = action.payload.data
+          })
+          .addCase(fetchTags.rejected, (state, action) => {
+            state.tagStatus = 'failed'
+            console.log('failed to get tags')
+            state.tagError = action.error.message
+          })
       }
 })
 
-export const { selectCurrent } = fabricsSlice.actions
+export const { selectCurrent, selectTag } = fabricsSlice.actions
 export default fabricsSlice.reducer

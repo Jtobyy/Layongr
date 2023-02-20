@@ -25,9 +25,16 @@ const productsPersistConfig = {
     storage,
 };
 
+const fabricsPersistConfig = {
+    key: 'fabrics',
+    storage,
+};
+
+
 const productsWishlistPersistedReducer = persistReducer(productsWishlistPersistConfig, productsWishlistReducer);
 const fabricsWishlistPersistedReducer = persistReducer(fabricsWishlistPersistConfig, fabricsWishlistReducer);
 const productsPersistedReducer = persistReducer(productsPersistConfig, productsReducer);
+const fabricsPersistedReducer = persistReducer(fabricsPersistConfig, fabricsReducer);
 
 export const store = configureStore({
     reducer: {
@@ -36,7 +43,7 @@ export const store = configureStore({
         productsWishlist: productsWishlistPersistedReducer,
         fabricsWishlist: fabricsWishlistPersistedReducer,
         products: productsPersistedReducer,
-        fabrics: fabricsReducer,
+        fabrics: fabricsPersistedReducer,
     },
 });
 

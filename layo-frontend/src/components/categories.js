@@ -13,8 +13,25 @@ import jeansIcon from '../images/jeans-icon.png';
 import jacketIcon from '../images/jacket-icon.png';
 import gownIcon from '../images/gown-icon.png';
 
+import { connect } from "react-redux";
+import { fetchTags, selectTag } from "../features/fabricsSlice";
 
-export default class Categories extends React.Component {
+const RenderTags = (props) => {
+    // console.log(props.tags)
+    let i = 0;
+    let el;
+    const tags = props.tags.map((tag) => {
+        if (i == props.currentTag) el = <div className='catItem selectedCatItem' data-key={i} >{tag}</div>;
+        else el = <div className='catItem' data-key={i}>{tag}</div>;
+        i++;
+        return el;
+    })
+    return (
+        <div className='d-flex flex-container  items-wrapper text-center justify-content-between align-items-center '> {tags} </div>
+    )
+}
+
+class Categories extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -24,8 +41,22 @@ export default class Categories extends React.Component {
             let element = e.target
             $('.catItem').removeClass('selectedCatItem')
             element.classList.add('selectedCatItem')
+            // this.props.selectTag(e.target.dataset.key)
+            // console.log(this.propscurrentTag)
+            // console.log(e.target.dataset.key)
             // Get items of this category from the endpoint
         })
+
+        const tagStatus = this.props.tagStatus
+        if (tagStatus === 'idle') {
+            fetchTags()
+        }
+        else if (tagStatus === 'failed') {
+            console.log('unable to fetch fabrics')
+            console.log(this.props.tagError)
+        }
+        else if (tagStatus === 'succeeded') console.log('got fabrics')        
+
     }
 
     render() {
@@ -93,35 +124,39 @@ export default class Categories extends React.Component {
     else if (this.props.category === "fabrics") 
         return (
             <div className='d-flex justify-content-center' >
-            <div className="categories-carousel carousel carousel-dark slide w-75" data-bs-rid="carousel">
-                <div className="carousel-inner">
-                    <div className="carousel-item active w-100 d-flex justify-content-center" data-bs-interval="10000">
-                        <div className='d-flex flex-container  items-wrapper text-center justify-content-between align-items-center '>
-                            <div className='catItem'>All</div>
-                            <div className='catItem'>Lace</div>
-                            <div className='catItem'>Chiffon</div>
-                            <div className='catItem'>Adire</div>
-                            <div className='catItem'>Velvet</div>
-                            <div className='catItem'>Aso Oke</div>
-                            <div className='catItem'>Ankara</div>
-                            <div className='catItem'>Atiku</div>
-                            <div className='catItem'>Broccades</div>
-                            <div className='catItem'>Yarn</div>
-                            <div className='catItem'>Flannel</div>
-                            <div className='catItem'>Tulle</div>
-                        </div>    
+                <div className="categories-carousel carousel carousel-dark slide w-75" data-bs-rid="carousel">
+                    <div className="carousel-inner">
+                        <div className="carousel-item active w-100 d-flex justify-content-center" data-bs-interval="10000">
+                            <RenderTags tags={this.props.tags} currentTag={this.props.currentTag} />
+                        </div>
                     </div>
+                    <button className="carousel-control carousel-control-prev" style={{width: 'fit-content'}} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Previous</span>
+                    </button>
+                    <button className="carousel-control carousel-control-next" style={{width: 'fit-content'}} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button className="carousel-control carousel-control-prev" style={{width: 'fit-content'}} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control carousel-control-next" style={{width: 'fit-content'}} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
-                </button>
-            </div>
             </div>
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        tags: state.fabrics.tags,
+        tagStatus: state.fabrics.tagStatus,
+        currentTag: state.fabrics.currentTag,
+        tagErrorMessage: state.fabrics.tagError,
+    };
+};
+
+const mapDispatchToProps = () => ({ 
+    fetchTags,
+    selectTag,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps())(Categories)

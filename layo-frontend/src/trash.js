@@ -111,3 +111,24 @@
         // {id: 9, title: "White Lace", image: testpic10, company: 'Tobi Store',  price: '7000 per yard' }, 
         // {id: 10, title: "Navy Blue Chiffon", image: testpic11, company: 'Tobi Store',  price: '7000 per yard' }, 
         // {id: 11, title: "Navy Blue Chiffon", image: testpic12, company: 'Tobi Store',  price: '7000 per yard' }, 
+
+
+                // const tagStatus = this.props.tagStatus;
+
+        // if (this.props.category === "fabrics") {
+        //     if (tagStatus === 'idle') {
+        //         fetchTags()
+        //     }
+        //     else if (tagStatus === 'failed') {
+        //         console.log('unable to fetch tags')
+        //         console.log(this.props.tagErrorMessage)
+        //     }
+        //     else if (tagStatus === 'success') console.log('got tags')
+        // }
+
+
+    // renderTags = () => (this.props.tags.map(tag => (<div className='catItem'>{tag}</div>)))
+
+// this.state = {
+        //     tags: this.props.tags,
+        // }    
