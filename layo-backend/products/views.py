@@ -24,13 +24,28 @@ class ProductListAPIView(generics.ListAPIView):
     """    
     def get_queryset(self):
         queryset = Product.objects.all()
-        tag = self.request.query_params.get('tags')
-        category = self.request.query_params.get('cat')
-        if tag is not None:
-            tags = tag.split(',')    
-            queryset = queryset.filter(tags__in = tags)
+        get_tag = self.request.query_params.get('tags')
+        category = self.request.query_params.get('cats')
         if category is not None:
-            queryset = queryset.filter(category__in = category)
+            tags_set = list(Tag.objects.filter(category__in = category).values_list('id', flat=True))
+            tags_set = [str(tag) for tag in tags_set]
+        else:
+            tags_set = Tag.objects.filter(category = 'C')
+            tags_set = [str(tag) for tag in tags_set]
+        if get_tag is not None:
+            tags = get_tag.split(',')
+            use_tags = []
+            for tag in tags_set:    
+                if tag in tags and tag in tags_set:
+                    use_tags.append(tag)
+            
+            # checks
+            print("tags =", tags)
+            print("tags_set =", tags_set)
+
+            queryset = queryset.filter(tags__in = use_tags)
+        else:
+            queryset = queryset.filter(tags__in = tags_set)
         return queryset
     serializer_class = ProductSerializer
 
@@ -101,8 +116,18 @@ class TagListAPIView(generics.ListAPIView):
     name: The name or category of the tag
     image: A sample image of the tag
     """        
-    queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+    def get_queryset(self):
+        # Categories of tags to query for
+        queryset = Tag.objects.all()
+        get_cat = self.request.query_params.get('cat')
+
+        if get_cat is not None:
+            queryset = queryset.filter(category = get_cat)
+        else:
+            queryset = queryset.filter(category = 'C')
+        return queryset
 
     # permission_classes = [IsStaffEditorPermission]    
 

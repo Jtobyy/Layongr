@@ -4,6 +4,8 @@ from .models import Product, Tag
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    tags = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Product
         fields = [
@@ -19,7 +21,6 @@ class ProductSerializer(serializers.ModelSerializer):
             'inventory',
             'date',
         ]
-
 
 class TagSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField(read_only=True)

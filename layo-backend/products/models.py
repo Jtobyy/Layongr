@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import PartnerAccount
 
-category = [('F', 'fabric'), ('T', 'tailor'), ('O', 'other')]
+category = [('F', 'fabric'), ('C', 'custom'), ('O', 'other')]
 
 # Path to store tag images
 def tag_image_path(instance, filename): 
@@ -13,7 +13,7 @@ class Tag(models.Model):
     image = models.ImageField(upload_to=tag_image_path, null=True)
 
     def __str__(self):
-        return self.name + ' (' + str(self.id) + ') '
+        return self.name + ' (' + str(self.id) + ') ' + ' (' + str(self.category) + ') ' 
 
 # Path to store product images
 def product_image_path(instance, filename): 
