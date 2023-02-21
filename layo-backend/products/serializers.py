@@ -4,7 +4,7 @@ from .models import Product, Tag
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    tags = serializers.StringRelatedField(many=True, read_only=True)
+    # tags = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Product

@@ -13,7 +13,7 @@ class Tag(models.Model):
     image = models.ImageField(upload_to=tag_image_path, null=True)
 
     def __str__(self):
-        return self.name + ' (' + str(self.id) + ') ' + ' (' + str(self.category) + ') ' 
+        return self.name + ' (' + str(self.id) + ') ' + '(' + str(self.category) + ') ' 
 
 # Path to store product images
 def product_image_path(instance, filename): 
