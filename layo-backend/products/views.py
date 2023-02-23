@@ -30,12 +30,12 @@ class ProductListAPIView(generics.ListAPIView):
             tags_set = list(Tag.objects.filter(category__in = category).values_list('id', flat=True))
             tags_set = [str(tag) for tag in tags_set]
         else:
-            tags_set = Tag.objects.filter(category = 'C')
+            tags_set = Tag.objects.all().values_list('id', flat=True)
             tags_set = [str(tag) for tag in tags_set]
         if get_tag is not None:
             tags = get_tag.split(',')
             use_tags = []
-            for tag in tags_set:    
+            for tag in tags_set:
                 if tag in tags and tag in tags_set:
                     use_tags.append(tag)
             
@@ -125,8 +125,8 @@ class TagListAPIView(generics.ListAPIView):
 
         if get_cat is not None:
             queryset = queryset.filter(category = get_cat)
-        else:
-            queryset = queryset.filter(category = 'C')
+        # else:
+        #     queryset = queryset.filter(category = 'C')
         return queryset
 
     # permission_classes = [IsStaffEditorPermission]    

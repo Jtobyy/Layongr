@@ -59,3 +59,17 @@ At the very least, we want to keep record of our clients that visited our sites 
 ### Joseph Olorunmeyan 
     github: Jtobyy
     email: olorunmeyanjoseph@gmail.com
+
+
+
+
+
+
+### Tags
+Tag of a product, could be fabric, cap, velvet etc
+
+### Category
+Category a tag belongs to, either fabric, custom or other.
+
+Tags have categories, each tag belongs to one of the 3 categories
+Products have tags.
