@@ -14,15 +14,15 @@ import jacketIcon from '../images/jacket-icon.png';
 import gownIcon from '../images/gown-icon.png';
 
 import { connect } from "react-redux";
-import { fetchTags, selectTag } from "../features/fabricsSlice";
+import { fetchFabrics, fetchTags, selectTag } from "../features/fabricsSlice";
 
 const RenderTags = (props) => {
     // console.log(props.tags)
     let i = 0;
     let el;
     const tags = props.tags.map((tag) => {
-        if (i == props.currentTag) el = <div className='catItem selectedCatItem' data-key={i} >{tag}</div>;
-        else el = <div className='catItem' data-key={i}>{tag}</div>;
+        if (i == props.currentTag) el = <div className='catItem selectedCatItem' data-key={i} data-uid={tag.id} key={i}>{tag.name}</div>;
+        else el = <div className='catItem' data-key={i} data-uid={tag.id} key={i}>{tag.name}</div>;
         i++;
         return el;
     })
@@ -41,21 +41,25 @@ class Categories extends React.Component {
             let element = e.target
             $('.catItem').removeClass('selectedCatItem')
             element.classList.add('selectedCatItem')
-            // this.props.selectTag(e.target.dataset.key)
-            // console.log(this.propscurrentTag)
-            // console.log(e.target.dataset.key)
+
+            this.props.selectTag(e.target.dataset.key)
+            this.props.fetchFabrics({cat: 'F', tags: e.target.dataset.uid})
             // Get items of this category from the endpoint
         })
 
         const tagStatus = this.props.tagStatus
         if (tagStatus === 'idle') {
-            fetchTags()
+            console.log('tag fetch idle')
+            this.props.fetchTags()
         }
         else if (tagStatus === 'failed') {
             console.log('unable to fetch fabrics')
             console.log(this.props.tagError)
         }
-        else if (tagStatus === 'succeeded') console.log('got fabrics')        
+        else if (tagStatus === 'succeeded') {
+            console.log('got tags')
+            console.log(this.props.tags)
+        } 
 
     }
 
@@ -155,6 +159,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = () => ({ 
+    fetchFabrics,    
     fetchTags,
     selectTag,
 });

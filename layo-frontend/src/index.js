@@ -22,7 +22,11 @@ import CheckoutMeasurement from './pages/checkoutMeasurement';
 import ReviewOrder from './pages/orderReview';
 import Profile from './pages/profile/profile';
 
+// import { loadProgressBar } from 'axios-progress-bar';
+
 // import reportWebVitals from './reportWebVitals';
+
+// loadProgressBar()
 
 class App extends React.Component {
   render() {

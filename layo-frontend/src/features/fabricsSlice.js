@@ -18,17 +18,18 @@ import axios from "axios";
 //     id, title, image, company, rating, price, delivery_time,
 // }
 export const fetchTags = createAsyncThunk('fabrics/fetchTags', async () => {
-  let response = await axios.get('http://127.0.0.1:8000/api/products/tags?cat=F')
+  let response = await axios.get(`http://127.0.0.1:8000/api/products/tags?cat=F`)
   return response
 })
 
 
-export const fetchFabrics = createAsyncThunk('fabrics/fetchFabrics', async () => {
-  let response = await axios.get('http://127.0.0.1:8000/api/products/?cats=F')
+export const fetchFabrics = createAsyncThunk('fabrics/fetchFabrics', async (qStrings) => {
+  const {cat, tags} = qStrings    
+  let response = await axios.get(`http://127.0.0.1:8000/api/products/?cat=${cat}&tags=${tags}`)
   return response
 })
 
-let tags = ['fabric', 'lace', 'chiffon', 'adire', 'velvet', 'aso_oke', 'ankara', 'atiku', 'broccades', 'yarn', 'flannel', 'tulle']
+let tags = [ {id: 0, name: 'fabric', 'category': 'F'} ]
 
 let initialState = {
     fabrics: [],
@@ -59,31 +60,32 @@ const fabricsSlice = createSlice({
         builder
           .addCase(fetchFabrics.pending, (state, action) => {
             state.status = 'loading'
-            console.log('loading')
+            // console.log('loading')
           })
           .addCase(fetchFabrics.fulfilled, (state, action) => {
             state.status = 'succeeded'
-            console.log('success')
+            // console.log('success')
+            // console.log(action.payload.data)
             state.fabrics = action.payload.data
           })
           .addCase(fetchFabrics.rejected, (state, action) => {
             state.status = 'failed'
-            console.log('failed')
+            // console.log('failed')
             state.error = action.error.message
           })
 
           .addCase(fetchTags.pending, (state, action) => {
             state.tagStatus = 'loading'
-            console.log('loading tags')
+            // console.log('loading tags')
           })
           .addCase(fetchTags.fulfilled, (state, action) => {
             state.tagStatus = 'succeeded'
-            console.log('success getting tags')
-            state.fabrics = action.payload.data
+            // console.log('success getting tags')
+            state.tags = action.payload.data
           })
           .addCase(fetchTags.rejected, (state, action) => {
             state.tagStatus = 'failed'
-            console.log('failed to get tags')
+            // console.log('failed to get tags')
             state.tagError = action.error.message
           })
       }
