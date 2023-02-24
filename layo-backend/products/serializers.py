@@ -1,10 +1,29 @@
-from rest_framework import serializers, permissions
+from rest_framework import serializers
 
-from .models import Product, Tag
+from .models import Product, Tag, Color
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    # tags = serializers.StringRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Product
+        fields = [
+            'id',
+            'partner',
+            'name',
+            'description',
+            'tags',
+            'colors',
+            'regular_price',
+            'sale_price',
+            'weight',
+            'image',
+            'inventory',
+            'date',
+        ]
+
+class ProductListSerializer(serializers.ModelSerializer):
+    tags = serializers.StringRelatedField(many=True, read_only=True)
+    colors = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Product
@@ -14,6 +33,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'tags',
+            'colors',
             'regular_price',
             'sale_price',
             'weight',
@@ -37,3 +57,16 @@ class TagSerializer(serializers.ModelSerializer):
     def get_id(self, obj):
             return obj.id        
 
+class ColorSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Color
+        fields = [
+            'id',
+            'name',
+            'image',
+        ]
+
+    def get_id(self, obj):
+            return obj.id        

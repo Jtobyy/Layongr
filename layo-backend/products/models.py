@@ -15,6 +15,17 @@ class Tag(models.Model):
     def __str__(self):
         return self.name + ' (' + str(self.id) + ') ' + '(' + str(self.category) + ') ' 
 
+# Path to store tag images
+def color_image_path(instance, filename): 
+    return '{0}_images/{1}'.format(instance.name, filename)
+# A sample table of different product tags
+class Color(models.Model):
+    name = models.CharField('color name', max_length=50, unique=True)
+    image = models.ImageField(upload_to=color_image_path, null=True)
+
+    def __str__(self):
+        return self.name
+
 # Path to store product images
 def product_image_path(instance, filename): 
     return '{0}_images/{1}'.format(instance.name, filename)
@@ -24,6 +35,7 @@ class Product(models.Model):
     name = models.CharField('product name', max_length=100, unique=True)
     description = models.TextField('description', null=False)
     tags = models.ManyToManyField(Tag, verbose_name='tags', blank=False)
+    colors = models.ManyToManyField(Color, verbose_name='colors', blank=True)
     regular_price = models.DecimalField('Regular price (NGR)', default=25000.00, max_digits=10, decimal_places=2)
     sale_price = models.DecimalField('Sale price (NGR)', default=25000.00, max_digits=10, decimal_places=2)
     weight = models.DecimalField('Weight (kg)', default=25.00, max_digits=10, decimal_places=2)
