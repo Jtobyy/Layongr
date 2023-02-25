@@ -2,6 +2,7 @@ from django.db import models
 from users.models import PartnerAccount
 
 category = [('F', 'fabric'), ('C', 'custom'), ('O', 'other')]
+rating = [(1, 'very poor'), (2, 'poor'), (3, 'average'), (4, 'good'), (5, 'very good')]
 
 # Path to store tag images
 def tag_image_path(instance, filename): 
@@ -29,6 +30,14 @@ class Color(models.Model):
 # Path to store product images
 def product_image_path(instance, filename): 
     return '{0}_images/{1}'.format(instance.name, filename)
+def product_image_path2(instance, filename): 
+    return '{0}_images/{1}'.format(instance.name, filename)
+def product_image_path3(instance, filename): 
+    return '{0}_images/{1}'.format(instance.name, filename)
+def product_image_path4(instance, filename): 
+    return '{0}_images/{1}'.format(instance.name, filename)
+def product_image_path5(instance, filename): 
+    return '{0}_images/{1}'.format(instance.name, filename)
 # A sample of what a procuct table may be
 class Product(models.Model):    
     partner = models.ForeignKey(PartnerAccount, on_delete=models.CASCADE)    
@@ -40,7 +49,12 @@ class Product(models.Model):
     sale_price = models.DecimalField('Sale price (NGR)', default=25000.00, max_digits=10, decimal_places=2)
     weight = models.DecimalField('Weight (kg)', default=25.00, max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to=product_image_path, null=False)
+    image2 = models.ImageField(upload_to=product_image_path2, null=False)
+    image3 = models.ImageField(upload_to=product_image_path3, null=False)
+    image4 = models.ImageField(upload_to=product_image_path4, null=False)
+    image5 = models.ImageField(upload_to=product_image_path5, null=False)
     inventory = models.IntegerField(default=1000)
+    rating = models.IntegerField(choices=rating, default=3)
     date = models.DateTimeField('last updatee', auto_now=True)
 
     class Meta:

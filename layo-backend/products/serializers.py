@@ -18,12 +18,14 @@ class ProductSerializer(serializers.ModelSerializer):
             'weight',
             'image',
             'inventory',
+            'rating',
             'date',
         ]
 
 class ProductListSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True, read_only=True)
     colors = serializers.StringRelatedField(many=True, read_only=True)
+    # ratingDisplay = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
@@ -39,8 +41,13 @@ class ProductListSerializer(serializers.ModelSerializer):
             'weight',
             'image',
             'inventory',
+            'rating',
             'date',
         ]
+
+    # def get_rating(self, obj):
+    #         return obj.get_rating_display()
+        
 
 class TagSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField(read_only=True)
