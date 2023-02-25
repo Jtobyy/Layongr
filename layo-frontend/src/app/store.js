@@ -34,7 +34,7 @@ const fabricsPersistConfig = {
 const productsWishlistPersistedReducer = persistReducer(productsWishlistPersistConfig, productsWishlistReducer);
 const fabricsWishlistPersistedReducer = persistReducer(fabricsWishlistPersistConfig, fabricsWishlistReducer);
 const productsPersistedReducer = persistReducer(productsPersistConfig, productsReducer);
-const fabricsPersistedReducer = persistReducer(fabricsPersistConfig, fabricsReducer);
+// const fabricsPersistedReducer = persistReducer(fabricsPersistConfig, fabricsReducer);
 
 export const store = configureStore({
     reducer: {
@@ -43,7 +43,7 @@ export const store = configureStore({
         productsWishlist: productsWishlistPersistedReducer,
         fabricsWishlist: fabricsWishlistPersistedReducer,
         products: productsPersistedReducer,
-        fabrics: fabricsPersistedReducer,
+        fabrics: fabricsReducer,
     },
 });
 

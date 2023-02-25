@@ -26,15 +26,18 @@ export default function Fabrics() {
 
     useEffect(() => {
         if (fabricsStatus === 'idle') {
-            dispatch(fetchFabrics())
+            dispatch(fetchFabrics({cat: 'F'}))
         }
         else if (fabricsStatus === 'failed') {
-            console.log('unable to fetch fabrics')
-            console.log(errorMessage)
+            // console.log('unable to fetch fabrics')
+            // console.log(errorMessage)
             // console.log(errorMessage)
             // if (errorMessage === 'Network Error') alert(errorMessage)
         }
-        else if (fabricsStatus === 'succeeded') console.log('got fabrics')
+        else if (fabricsStatus === 'succeeded') {
+            // console.log('got fabrics')
+            // console.log(fabrics)   
+        }
     }, [fabricsStatus, dispatch, fabrics, errorMessage])
 
     // useEffect(() => {
@@ -102,7 +105,7 @@ export default function Fabrics() {
                 <FilterBy filter="fabrics" />
             </div>
             <div className="container mt-3 ms-2 position-relative">
-                <div className="position-absolute top-0 sort-ind ps-1 pe-3">Sort By:    Pricing</div>
+                {/* <div className="position-absolute top-0 sort-ind ps-1 pe-3">Sort By:    Pricing</div> */}
                 <div className="row">
                     {renderedFabrics}    
                 </div>

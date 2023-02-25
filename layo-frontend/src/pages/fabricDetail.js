@@ -6,12 +6,29 @@ import CustomerReview from "../components/customerReview";
 
 import blackStar from '../images/black-star.png';
 
+import { fetchRelatedFrabrics, fetchMoreFromStore } from "../features/fabricsSlice";
+
+
+function RenderRating(props) {
+    let arr = []
+    let i = 0
+    while (i < Number(props.rating)) {
+        arr.push(blackStar);
+        i++;
+    }
+    const ratings = arr.map((star) => (
+        <img width='15px' className="mb-1" src={star} alt="sample"/>
+    ))
+    return <div>{ratings}</div>
+}
+
 class FabricDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             // fabric: {},
             images: [],
+            moreSamples: [],
             relatedFabrics: [],
             moreFabrics: [],
         }
@@ -24,23 +41,37 @@ class FabricDetail extends React.Component {
         // get at most 3 items related to current item
         // get at most 2 more items from this store
 
-        this.setState({images: [currentSelect.image, currentSelect.image], 
+        this.setState({images: [currentSelect.image, currentSelect.image2], 
+            moreSamples: [currentSelect.image3, currentSelect.image4, currentSelect.image5], 
             relatedFabrics: [currentSelect.image, currentSelect.image, currentSelect.image],
             moreFabrics: [currentSelect.image, currentSelect.title, currentSelect.image, currentSelect.title]
         })
+
+        let moreFromStoreStatus = this.props.moreFromStoreStatus
+        if (moreFromStoreStatus === 'idle') {
+            // console.log('got here too')    
+            this.props.fetchMoreFromStore({cat: 'F', store: currentSelect.business_name})
+        }
+        else if (moreFromStoreStatus === 'failed') {
+            // console.log('unable to fetch more fabrics')
+            console.log(this.props.moreFromStoreError)
+        }
+        else if (moreFromStoreStatus === 'succeeded') {
+            console.log(this.props.moreFromStore)    
+            console.log('got more')
+        }         
     }
     
     renderedSamples = () => (
         this.state.images.map(image => {
             return (
-                <img className="col-5 sampleImageLarge" src={image} alt='sample image' loading="lazy" />
+                <img className="col-5 sampleImageLarge" src={image} alt='sample' loading="lazy" />
             )
     }))
 
-    renderedMoreOfType = () => { this.state.moreOfType.map(fabric => (
-        // TODO
-        console.log("??")
-    ))}
+    // renderMoreSamples = () => { this.state.moreSample.map(fabric => (
+        
+    // ))}
 
     showTailors = () => { this.state.tailors.map(tailor => (
         // TODO
@@ -55,18 +86,16 @@ class FabricDetail extends React.Component {
                         {this.renderedSamples()}
                     </div>
                     <div className="col-5 detail-container">
-                        <h2>{this.props.currentSelect.title}</h2>
+                        <h2>{this.props.currentSelect.name}</h2>
                         <div className="w-50 d-flex align-items-center justify-content-between">
-                            <div>{this.props.currentSelect.company}</div>
-                            <div>
-                                <span className="me-2">{this.props.currentSelect.rating}</span>
-                                <img width='15px' className="mb-1" src={blackStar} alt=""/>
-                            </div>
+                            <div>{this.props.currentSelect.business_name}</div>
+                            {/* <RenderRating number={this.props.currentSelect.rating} /> */}
+                            <RenderRating rating={3} />
                         </div>
                         <div className="fabric-detail row mt-3 ">
                             <div className="col text-center ">
                                 <button className="rounded px-5 py-1 order-button mb-4">Order</button><br/>
-                                <NumberFormat value={this.props.currentSelect.price}
+                                <NumberFormat value={this.props.currentSelect.sale_price}
                                 displayType={'text'} thousandSeparator={true} prefix={'₦ '} />
                             </div>
                             <div className="col info position-relative">
@@ -83,9 +112,9 @@ class FabricDetail extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-7 row justify-content-between">
-                        <img className="col-3 sampleImageSmall" src={this.state.relatedFabrics[0]} alt='sample image' loading="lazy" />
-                        <img className="col-3 sampleImageSmall" src={this.state.relatedFabrics[1]} alt='sample image' loading="lazy" />
-                        <img className="col-3 sampleImageSmall" src={this.state.relatedFabrics[2]} alt='sample image' loading="lazy" />
+                        <img className="col-3 sampleImageSmall" src={this.state.moreSamples[0]} alt='sample' loading="lazy" />
+                        <img className="col-3 sampleImageSmall" src={this.state.moreSamples[1]} alt='sample' loading="lazy" />
+                        <img className="col-3 sampleImageSmall" src={this.state.moreSamples[2]} alt='sample' loading="lazy" />
                     </div>
                     <div className="col-5 more ms-4">
                         <p className="px-1 my-1">More from this store</p>
@@ -367,11 +396,20 @@ const mapStateToProps = state => {
     return {
         fabrics: state.fabrics.fabrics,
         currentSelect: state.fabrics.currentSelect,
+        moreFromStore: state.fabrics.moreFromStore,
+        relatedFabricStatus: state.fabrics.relatedFabricStatus,
+        moreFromStoreStatus: state.fabrics.moreFromStoreStatus,
+        moreFromStoreError: state.fabrics.moreFromStoreError,
     };
 };
+
+const mapDispatchToProps = () => ({ 
+    fetchRelatedFrabrics,
+    fetchMoreFromStore
+});
 
 // const fabricDetail_wrapper = () => (
 //     <FabricDetail location={useLocation()} />
 // );
 
-export default connect(mapStateToProps)(FabricDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(FabricDetail)

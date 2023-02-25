@@ -38,6 +38,7 @@ class Categories extends React.Component {
 
     componentDidMount() {
         $('.catItem').on('click', (e) => {
+            console.log(e)
             let element = e.target
             $('.catItem').removeClass('selectedCatItem')
             element.classList.add('selectedCatItem')
@@ -53,14 +54,26 @@ class Categories extends React.Component {
             this.props.fetchTags()
         }
         else if (tagStatus === 'failed') {
-            console.log('unable to fetch fabrics')
+            console.log('unable to fetch tags')
             console.log(this.props.tagError)
         }
         else if (tagStatus === 'succeeded') {
             console.log('got tags')
-            console.log(this.props.tags)
+            // console.log(this.props.tags)
         } 
+    }
 
+    componentDidUpdate() {
+        $('.catItem').on('click', (e) => {
+            console.log(e)
+            let element = e.target
+            $('.catItem').removeClass('selectedCatItem')
+            element.classList.add('selectedCatItem')
+
+            this.props.selectTag(e.target.dataset.key)
+            this.props.fetchFabrics({cat: 'F', tags: e.target.dataset.uid})
+            // Get items of this category from the endpoint
+        })   
     }
 
     render() {

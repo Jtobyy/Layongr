@@ -1,22 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// import testpic1 from '../images/fabrics-testpic1.png';
-// import testpic2 from '../images/fabrics-testpic2.png';
-// import testpic3 from '../images/fabrics-testpic3.png';
-// import testpic4 from '../images/fabrics-testpic4.png';
-// import testpic5 from '../images/fabrics-testpic5.png';
-// import testpic6 from '../images/fabrics-testpic6.png';
-// import testpic7 from '../images/fabrics-testpic7.png';
-// import testpic8 from '../images/fabrics-testpic8.png';
-// import testpic9 from '../images/fabrics-testpic9.png';
-// import testpic10 from '../images/fabrics-testpic10.png';
-// import testpic11 from '../images/fabrics-testpic11.png';
-// import testpic12 from '../images/fabrics-testpic12.png';
 
-// Contents of a product item
-// itemPrototype = {
-//     id, title, image, company, rating, price, delivery_time,
-// }
+
+export const fetchColors = createAsyncThunk('fabrics/fetchColors', async () => {  
+  let response = await axios.get(`http://127.0.0.1:8000/api/products/colors`)
+  return response
+})
+
 export const fetchTags = createAsyncThunk('fabrics/fetchTags', async () => {
   let response = await axios.get(`http://127.0.0.1:8000/api/products/tags?cat=F`)
   return response
@@ -24,31 +14,66 @@ export const fetchTags = createAsyncThunk('fabrics/fetchTags', async () => {
 
 
 export const fetchFabrics = createAsyncThunk('fabrics/fetchFabrics', async (qStrings) => {
-  const {cat, tags} = qStrings    
-  let response = await axios.get(`http://127.0.0.1:8000/api/products/?cat=${cat}&tags=${tags}`)
+  const {cat, tags, price, colors} = qStrings
+  let query = ''
+  query += `cat=${cat}`
+  if (tags !== undefined) query += `&tags=${tags}`
+  if (price !== undefined) query += `&price=${price}`
+  if (colors !== undefined) query += `&colors=${colors}`
+
+  let response = await axios.get(`http://127.0.0.1:8000/api/products/?${query}`)
   return response
 })
 
+export const fetchRelatedFrabrics = createAsyncThunk('fabrics/fetchRelatedFabrics', async (qStrings) => {
+  const {cat, tags, price, colors} = qStrings
+  let query = ''
+  query += `cat=${cat}`
+  if (tags != undefined) query += `&tags=${tags}`
+  if (price != undefined) query += `&price=${price}`
+  if (colors != undefined) query += `&colors=${colors}`
+
+  let response = await axios.get(`http://127.0.0.1:8000/api/products/?${query}`)
+  return response
+})
+
+export const fetchMoreFromStore = createAsyncThunk('fabrics/fetchMoreFromStore', async (qStrings) => {
+  const {cat, store} = qStrings
+  let query = `cat=${cat}&partner=${store}`
+
+  let response = await axios.get(`http://127.0.0.1:8000/api/products/?${query}`)
+  return response
+})
+
+
 let tags = [ {id: 0, name: 'fabric', 'category': 'F'} ]
+let colors = [ {id: 0, name: 'red'} ]
 
 let initialState = {
     fabrics: [],
     currentSelect: 0,
+    relatedToCurrent: [],
+    moreFromStore: [],
+    colors: colors,
+    currentColor: 0,
     tags: tags,
     currentTag: 0,
     status: 'idle',
     tagStatus: 'idle',
+    colorStatus: 'idle',
+    relatedFabricStatus: 'idle',
+    moreFromStoreStatus: 'idle',
     error: null,
-    tagError: null
+    tagError: null,
+    colorError: null,
+    relatedFabricError: null,
+    moreFromStoreError: null,
 }
 
 const fabricsSlice = createSlice({
     name: 'fabrics',
     initialState,
     reducers: {
-        // addItem: (state) => {
-
-        // }
         selectCurrent: (state, action) => {
             state.currentSelect = action.payload;
         },
@@ -59,6 +84,7 @@ const fabricsSlice = createSlice({
     extraReducers(builder) {
         builder
           .addCase(fetchFabrics.pending, (state, action) => {
+            state.fabrics = []
             state.status = 'loading'
             // console.log('loading')
           })
@@ -75,19 +101,52 @@ const fabricsSlice = createSlice({
           })
 
           .addCase(fetchTags.pending, (state, action) => {
-            state.tagStatus = 'loading'
-            // console.log('loading tags')
+          state.tagStatus = 'loading'
           })
           .addCase(fetchTags.fulfilled, (state, action) => {
             state.tagStatus = 'succeeded'
-            // console.log('success getting tags')
             state.tags = action.payload.data
           })
           .addCase(fetchTags.rejected, (state, action) => {
             state.tagStatus = 'failed'
-            // console.log('failed to get tags')
             state.tagError = action.error.message
           })
+
+          .addCase(fetchColors.pending, (state, action) => {
+            state.colorStatus = 'loading'
+          })
+          .addCase(fetchColors.fulfilled, (state, action) => {
+            state.colorStatus = 'succeeded'
+            state.colors = action.payload.data
+          })
+          .addCase(fetchColors.rejected, (state, action) => {
+            state.colorStatus = 'failed'
+            state.tagError = action.error.message
+          })          
+
+          .addCase(fetchRelatedFrabrics.pending, (state, action) => {
+            state.relatedFabricStatus = 'loading'
+          })
+          .addCase(fetchRelatedFrabrics.fulfilled, (state, action) => {
+            state.relatedFabricStatus = 'succeeded'
+            state.relatedToCurrent = action.payload.data
+          })
+          .addCase(fetchRelatedFrabrics.rejected, (state, action) => {
+            state.relatedFabricStatus = 'failed'
+            state.relatedFabricError = action.error.message
+          })          
+
+          .addCase(fetchMoreFromStore.pending, (state, action) => {
+            state.moreFromStoreStatus = 'loading'
+          })
+          .addCase(fetchMoreFromStore.fulfilled, (state, action) => {
+            state.relatedFabricStatus = 'succeeded'
+            state.moreFromStore = action.payload.data
+          })
+          .addCase(fetchMoreFromStore.rejected, (state, action) => {
+            state.relatedFabricStatus = 'failed'
+            state.moreFromStoreError = action.error.message
+          })          
       }
 })
 
