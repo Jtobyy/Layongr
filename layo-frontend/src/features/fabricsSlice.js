@@ -39,8 +39,8 @@ export const fetchRelatedFrabrics = createAsyncThunk('fabrics/fetchRelatedFabric
 
 export const fetchMoreFromStore = createAsyncThunk('fabrics/fetchMoreFromStore', async (qStrings) => {
   const {cat, store} = qStrings
-  let query = `cat=${cat}&partner=${store}`
-
+  let query = `cat=${cat}&store=${store}`
+  
   let response = await axios.get(`http://127.0.0.1:8000/api/products/?${query}`)
   return response
 })
@@ -91,7 +91,6 @@ const fabricsSlice = createSlice({
           .addCase(fetchFabrics.fulfilled, (state, action) => {
             state.status = 'succeeded'
             // console.log('success')
-            // console.log(action.payload.data)
             state.fabrics = action.payload.data
           })
           .addCase(fetchFabrics.rejected, (state, action) => {
@@ -140,11 +139,12 @@ const fabricsSlice = createSlice({
             state.moreFromStoreStatus = 'loading'
           })
           .addCase(fetchMoreFromStore.fulfilled, (state, action) => {
-            state.relatedFabricStatus = 'succeeded'
+            state.moreFromStoreStatus = 'succeeded'
+            // console.log(action.payload.data)
             state.moreFromStore = action.payload.data
           })
           .addCase(fetchMoreFromStore.rejected, (state, action) => {
-            state.relatedFabricStatus = 'failed'
+            state.moreFromStoreStatus = 'failed'
             state.moreFromStoreError = action.error.message
           })          
       }

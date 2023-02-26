@@ -49,18 +49,48 @@ class FabricDetail extends React.Component {
 
         let moreFromStoreStatus = this.props.moreFromStoreStatus
         if (moreFromStoreStatus === 'idle') {
-            // console.log('got here too')    
+            console.log('moreFromStore idle')
             this.props.fetchMoreFromStore({cat: 'F', store: currentSelect.business_name})
         }
         else if (moreFromStoreStatus === 'failed') {
-            // console.log('unable to fetch more fabrics')
+            console.log('unable to fetch more fabrics')
             console.log(this.props.moreFromStoreError)
         }
-        else if (moreFromStoreStatus === 'succeeded') {
-            console.log(this.props.moreFromStore)    
-            console.log('got more')
+        if (moreFromStoreStatus === 'succeeded') {
+            console.log('unable to fetch more fabrics')
+            console.log(this.props.moreFromStore)
+            let arr = []
+            for (let obj of this.props.moreFromStore) {
+                if (obj.id != currentSelect.id) {
+                   arr.push(obj) 
+                }
+            }
+            console.log(arr)
+            this.setState({moreSamples: arr})
         }         
     }
+    
+    // componentDidUpdate() {
+    //     const currentSelect = this.props.currentSelect;    
+    //     let moreFromStoreStatus = this.props.moreFromStoreStatus
+
+    //     if (moreFromStoreStatus === 'failed') {
+    //         console.log('unable to fetch more fabrics')
+    //         console.log(this.props.moreFromStoreError)
+    //     }
+    //     else if (moreFromStoreStatus === 'succeeded') {
+    //         console.log('succeeded')    
+    //         console.log(this.props.moreFromStore)
+    //         let arr = []
+    //         for (let obj of this.props.moreFromStore) {
+    //             if (obj.id != currentSelect.id) {
+    //                arr.push(obj) 
+    //             }
+    //         }
+    //         console.log(arr)
+    //         this.setState({moreSamples: arr})
+    //     }         
+    // }
     
     renderedSamples = () => (
         this.state.images.map(image => {
@@ -405,11 +435,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = () => ({ 
     fetchRelatedFrabrics,
-    fetchMoreFromStore
+    fetchMoreFromStore,
 });
 
 // const fabricDetail_wrapper = () => (
 //     <FabricDetail location={useLocation()} />
 // );
 
-export default connect(mapStateToProps, mapDispatchToProps)(FabricDetail)
+export default connect(mapStateToProps, mapDispatchToProps())(FabricDetail)
