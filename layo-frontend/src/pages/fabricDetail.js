@@ -9,6 +9,12 @@ import blackStar from '../images/black-star.png';
 import { fetchRelatedFrabrics, fetchMoreFromStore } from "../features/fabricsSlice";
 
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+
 function RenderRating(props) {
     let arr = []
     let i = 0
@@ -30,7 +36,8 @@ class FabricDetail extends React.Component {
             images: [],
             moreSamples: [],
             relatedFabrics: [],
-            moreFabrics: [],
+            moreFabricsImages: [],
+            moreFabricsIds: [],
         }
     }
 
@@ -56,19 +63,37 @@ class FabricDetail extends React.Component {
             console.log('unable to fetch more fabrics')
             console.log(this.props.moreFromStoreError)
         }
-        if (moreFromStoreStatus === 'succeeded') {
-            console.log('unable to fetch more fabrics')
-            console.log(this.props.moreFromStore)
-            let arr = []
-            for (let obj of this.props.moreFromStore) {
-                if (obj.id != currentSelect.id) {
-                   arr.push(obj) 
-                }
-            }
-            console.log(arr)
-            this.setState({moreSamples: arr})
-        }         
     }
+
+    getSnapshotBeforeUpdate(prevProps) {
+        return {updateRequired: prevProps.moreFromStore != this.props.moreFromStore}
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.moreFromStoreStatus === 'succeeded') {
+            if (snapshot.updateRequired) {
+                console.log('fetched more fabrics')
+                console.log(this.props.moreFromStore)
+                let arr = []
+                for (let obj of this.props.moreFromStore) {
+                    if (obj.id != this.props.currentSelect.id) {
+                    arr.push(obj) 
+                    }
+                }
+
+                let show1 = getRandomInt(0, arr.length)
+                let show2 = getRandomInt(0, arr.length)
+                while (show1 == show2) {
+                    show2 = getRandomInt(0, arr.length)
+                }
+                
+                console.log(show1, show2)
+                this.setState({moreFabricsImages: [arr[show1].image, arr[show2].image]})
+                this.setState({moreFabricsIds: [arr[show1].id, arr[show2].id]})
+                }    
+        }
+    }
+
     
     // componentDidUpdate() {
     //     const currentSelect = this.props.currentSelect;    
@@ -150,12 +175,12 @@ class FabricDetail extends React.Component {
                         <p className="px-1 my-1">More from this store</p>
                         <div className="row">
                             <div className="col-6">
-                                <img className="sampleImageMedium" src={this.state.moreFabrics[0]} alt='more images' loading="lazy" />
-                                {this.state.moreFabrics[1]}
+                                <img className="sampleImageMedium" src={this.state.moreFabricsImages[0]} alt='more images' loading="lazy" />
+                                {/* {this.state.moreFabrics[1]} */}
                             </div>
                             <div className="col-6">
-                                <img className="sampleImageMedium" src={this.state.moreFabrics[2]} alt='more images' loading="lazy" />
-                                {this.state.moreFabrics[1]}
+                                <img className="sampleImageMedium" src={this.state.moreFabricsImages[1]} alt='more images' loading="lazy" />
+                                {/* {this.state.moreFabrics[1]} */}
                             </div>
                         </div>
                     </div>
@@ -165,9 +190,9 @@ class FabricDetail extends React.Component {
                     <p className="px-1 mt-4 fs-5">Combo Made for you</p>
                     <div className="col-6 ps-0">
                         <div className="d-flex align-items-center">
-                            <img className="sampleImageMedium" src={this.state.moreFabrics[0]} alt='more images' loading="lazy" />
+                            <img className="sampleImageMedium" src={this.state.moreSamples[0]} alt='more images' loading="lazy" />
                             <div className="fw-bold px-3 fs-1">+</div>
-                            <img className="sampleImageMedium" src={this.state.moreFabrics[2]} alt='more images' loading="lazy" />
+                            <img className="sampleImageMedium" src={this.state.moreSamples[2]} alt='more images' loading="lazy" />
                             <div className="col-1 fs-4 text-end">
                                 or
                             </div>
@@ -179,9 +204,9 @@ class FabricDetail extends React.Component {
                    
                     <div className="col-6 ps-0">
                         <div className="col-6 d-flex align-items-center">
-                            <img className="sampleImageMedium" src={this.state.moreFabrics[0]} alt='more images' loading="lazy" />
+                            <img className="sampleImageMedium" src={this.state.moreSamples[0]} alt='more images' loading="lazy" />
                             <div className="fw-bold px-3 fs-1">+</div>
-                            <img className="sampleImageMedium" src={this.state.moreFabrics[2]} alt='more images' loading="lazy" />
+                            <img className="sampleImageMedium" src={this.state.moreSamples[2]} alt='more images' loading="lazy" />
                         </div>
                         <div className="fw-bold fs-4 d-flex rounded mt-3 justify-content-center text-white price-wrapper ">
                             <div className="price rounded px-2 ">N20,000</div>
@@ -192,10 +217,10 @@ class FabricDetail extends React.Component {
                 <div className="row justify-content-between pb-3 more-of-type">
                     <p className="px-1 mt-4 fs-5">Tailors</p>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -212,10 +237,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -232,10 +257,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -252,10 +277,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -272,10 +297,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -292,10 +317,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -312,10 +337,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -332,10 +357,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -352,10 +377,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -372,10 +397,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                     <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
@@ -392,10 +417,10 @@ class FabricDetail extends React.Component {
                         </div>
                     </div>
                      <div className="col-2 position-relative ps-0  me-3 mt-2  ">
-                        <img className="fabric-image" src={this.state.moreFabrics[2]} alt='' />
+                        <img className="fabric-image" src={this.state.moreSamples[2]} alt='' />
                         <div className="py-1">
                             <div className="d-flex">
-                                {this.state.moreFabrics[1]}
+                                {this.state.moreSamples[1]}
                                 <span className="ms-auto">
                                     4.32
                                     {/* <img className="blackStar ms-1" src={blackStar} alt='' /> */}
