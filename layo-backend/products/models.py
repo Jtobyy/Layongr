@@ -62,3 +62,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+# A combo contains two products, usually a fabric and a custom made wear
+class Combo(models.Model):
+    item1 = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="fabric_item")
+    item2 = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="custom_item")
+
+
+    # upsells: general
+    # crosssells: cart

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, Tag, Color
+from .models import Product, Tag, Color, Combo
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -17,6 +17,10 @@ class ProductSerializer(serializers.ModelSerializer):
             'sale_price',
             'weight',
             'image',
+            'image2',
+            'image3',
+            'image4',
+            'image5',
             'inventory',
             'rating',
             'date',
@@ -25,13 +29,13 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductListSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True, read_only=True)
     colors = serializers.StringRelatedField(many=True, read_only=True)
-    # ratingDisplay = serializers.SerializerMethodField(read_only=True)
+    business_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Product
         fields = [
             'id',
-            'partner',
+            'business_name',
             'name',
             'description',
             'tags',
@@ -40,13 +44,17 @@ class ProductListSerializer(serializers.ModelSerializer):
             'sale_price',
             'weight',
             'image',
+            'image2',
+            'image3',
+            'image4',
+            'image5',
             'inventory',
             'rating',
             'date',
         ]
 
-    # def get_rating(self, obj):
-    #         return obj.get_rating_display()
+    def get_business_name(self, obj):
+            return obj.partner.business_name
         
 
 class TagSerializer(serializers.ModelSerializer):
@@ -77,3 +85,25 @@ class ColorSerializer(serializers.ModelSerializer):
 
     def get_id(self, obj):
             return obj.id        
+
+class ComboSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  Combo
+        fields = '__all__'
+
+class ComboListSerializer(serializers.ModelSerializer):
+    item1_ = serializers.SerializerMethodField(read_only=True)
+    item2_ = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model =  Combo
+        fields = [
+            'item1_',
+            'item2_'
+        ]
+
+    def get_item1_(self, obj):
+            return obj.item1.name
+
+    def get_item2_(self, obj):
+            return obj.item2.name

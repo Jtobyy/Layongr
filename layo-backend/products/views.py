@@ -1,8 +1,8 @@
 from rest_framework import generics
 
 from api.permissions import IsStaffEditorPermission
-from .serializers import ProductSerializer, TagSerializer, ProductListSerializer, ColorSerializer
-from .models import Product, Tag, Color
+from .serializers import ProductSerializer, TagSerializer, ProductListSerializer, ColorSerializer, ComboSerializer, ComboListSerializer
+from .models import Product, Tag, Color, Combo
 
 from django.db.models import Q
 
@@ -104,6 +104,10 @@ class ProductListAPIView(generics.ListAPIView):
             
             queryset = queryset.filter(colors__name__in = color_list)
 
+        # Filter by store
+        store = self.request.query_params.get('store')
+        if store is not None:
+            queryset = queryset.filter(partner__business_name=store)
         return queryset
     serializer_class = ProductListSerializer
 
@@ -281,3 +285,71 @@ class ColorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsStaffEditorPermission]    
 
 color_retrieve_update_destroy_view = ColorRetrieveUpdateDestroyView.as_view()
+
+
+
+
+# Combo Views
+class ComboListAPIView(generics.ListAPIView):
+    """
+    This endpoint returns the list of all **colors** in the system.
+
+    Fields
+    id:     The color's unique identifier
+    name: The name of the color
+    image: A sample image of the color
+    """        
+    serializer_class = ComboListSerializer
+
+    def get_queryset(self):
+        queryset = Combo.objects.all()    
+        get_tags = self.request.query_params.get('tags')
+
+        if get_tags is not None:
+            tags = get_tags.split(',')
+            if 'M' in tags:
+                queryset.filter(item2__tags__in = ['male'])
+            elif 'F' in tags:
+                queryset.filter(item2__tags__in = ['female'])
+
+        return queryset
+
+combo_list_view = ComboListAPIView.as_view()
+
+
+class ComboCreateAPIView(generics.CreateAPIView):
+    """
+    This endpoint allows new combos to be added.
+
+    Only staff users have access to this endpoint.
+
+    Fields
+    id:     The combo's unique identifier
+    name: The name or category of the combo
+    image: A sample image of the combo
+    """        
+    queryset = Combo.objects.all()
+    serializer_class = ComboSerializer
+
+    permission_classes = [IsStaffEditorPermission]    
+
+combo_create_view = ComboCreateAPIView.as_view()
+
+
+class ComboRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    This endpoint returns the detail of a combo and also allows combos to be edited and deleted.
+
+    Only staff users have access to this endpoint.
+
+    Fields
+    id:     The combo's unique identifier
+    name: The name or category of the combo
+    image: A sample image of the combo
+    """        
+    queryset = Combo.objects.all()
+    serializer_class = ComboSerializer
+
+    permission_classes = [IsStaffEditorPermission]    
+
+combo_retrieve_update_destroy_view = ComboRetrieveUpdateDestroyView.as_view()

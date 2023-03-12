@@ -15,6 +15,10 @@ ENTITY = [
     ('P', 'Partnership'),
     ('C', 'Corporation'),
 ]
+GENDER = [
+    ('M', 'Male'), 
+    ('F', 'Female')
+]
 
 # Path to store user images
 def user_directory_path(instance, filename): 
@@ -36,10 +40,10 @@ class PartnerAccount(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=False)    
     # Business Information    
     business_entity = models.CharField(choices=ENTITY, max_length=1, default='S')
-    business_name = models.CharField(null=False, max_length=225)
+    business_name = models.CharField(null=False, max_length=225, unique=True)
  
     # Seller/Tailor Profile
-    brand_name = models.CharField(null=False, max_length=255)
+    brand_name = models.CharField(null=False, max_length=255, unique=True)
     legal_rep_first_name = models.CharField(null=False, max_length=225)
     legal_rep_other_name = models.CharField(null=True, max_length=225, default=None)
     legal_rep_last_name = models.CharField(null=False, max_length=225)
@@ -54,3 +58,21 @@ class PartnerAccount(models.Model):
 
     def __str__(self) -> str:
         return self.brand_name
+
+
+class CustomerAccount(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=False)
+
+    first_name = models.CharField(null=False, max_length=225)
+    other_name = models.CharField(null=True, max_length=225, default=None)
+    last_name = models.CharField(null=False, max_length=225)
+
+    gender = models.CharField(choices=GENDER, default='F', max_length=1)
+
+    # Bank Details
+    bank = models.IntegerField(choices=BANK, default=0)
+    account_number = models.CharField(max_length=25)
+    account_name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.first_name + self.last_name + '(' + self.gender + ')'

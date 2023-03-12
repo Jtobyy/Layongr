@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:pk>/', views.product_retrieve_update_destroy_view),
     path('tags/', include('products.tag_urls')),
     path('colors/', include('products.color_urls')),
+    path('combos/', include('products.combo_urls')),
 ]
